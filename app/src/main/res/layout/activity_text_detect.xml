@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shubham.writeitout.TextDetect">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#808080"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:text="WriteItOut"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:minWidth="0dp"
+                android:text="\u2712"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onPencilButtonClick"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/action_clear"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onClearButtonClick"
+                />
+
+        </LinearLayout>
+
+        <com.shubham.writeitout.CustomEditText
+            android:id="@+id/textField"
+            android:text="@string/input_text"
+            android:layout_below="@id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:background="#e0e0e0"
+            android:lines="5"
+            />
+
+        <LinearLayout
+            android:id="@+id/candidateBar"
+            android:layout_below="@id/textField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#808080"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onCandidateButtonClick"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onCandidateButtonClick"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onCandidateButtonClick"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:text="\u25BC"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onMoreButtonClick"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#808080"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Search"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onSearchButtonClick"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/space_button"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onSpaceButtonClick"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/delete_button"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:onClick="onDeleteButtonClick"
+                />
+
+        </LinearLayout>
+
+        <com.myscript.atk.sltw.SingleLineWidget
+            android:id="@+id/widget"
+            android:layout_below="@id/candidateBar"
+            android:layout_above="@id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f0f0f0"
+            tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <GridView
+            android:id="@+id/candidatePanel"
+            android:layout_below="@id/candidateBar"
+            android:layout_above="@id/buttons"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:numColumns="5"
+            android:background="#808080"
+            android:visibility="gone"
+            tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="8dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
