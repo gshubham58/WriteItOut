@@ -21,7 +21,8 @@
         <activity android:name=".math" />
         <activity android:name=".TextDetect" />
         <activity android:name=".line" />
-        <activity android:name=".searchResult"></activity>
+        <activity android:name=".searchResult" />
+        <activity android:name=".Notes"></activity>
     </application>
 
 </manifest>

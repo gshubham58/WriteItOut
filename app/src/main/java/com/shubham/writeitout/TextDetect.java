@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.myscript.atk.core.ui.IStroker;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
@@ -460,6 +461,11 @@ public class TextDetect extends Activity implements
         Intent i=new Intent(TextDetect.this,searchResult.class);
         i.putExtra("word",word);
         startActivity(i);
+    }
+    public void onSaveButtonClick(View v){
+    databaseHandler db=new databaseHandler(this);
+        db.add(word);
+        Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
     }
 
 }
