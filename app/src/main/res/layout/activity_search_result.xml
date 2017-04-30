@@ -5,15 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.shubham.writeitout.searchResult">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/rslt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/rslt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/rslt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </ScrollView>
-    </LinearLayout>
 </RelativeLayout>

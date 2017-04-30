@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyScript_ATK-Math-android-component/MyScript_ATK-Math-android-component.iml" filepath="$PROJECT_DIR$/MyScript_ATK-Math-android-component/MyScript_ATK-Math-android-component.iml" />
       <module fileurl="file://$PROJECT_DIR$/WriteItOut.iml" filepath="$PROJECT_DIR$/WriteItOut.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

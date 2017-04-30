@@ -52,7 +52,7 @@ public class TextDetect extends Activity implements
     private SingleLineWidgetApi mWidget;
     private int isCorrectionMode;
     boolean var=true;
-    public static String word;
+    public static String word="";
 
 
     @Override

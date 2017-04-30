@@ -5,15 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.shubham.writeitout.Notes">
-<ListView
-    android:layout_width="match_parent"
-    android:id="@+id/lstvw"
-    android:layout_height="wrap_content">
-
-</ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:id="@+id/txtvw"/>
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
 
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"
+        android:id="@+id/grdvw"
+        >
+
+    </GridView>
+    </LinearLayout>
 </RelativeLayout>
