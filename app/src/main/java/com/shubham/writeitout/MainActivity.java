@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(MainActivity.this,TextDetect.class);
+                i.putExtra("index",-1);
+                i.putExtra("text","");
                 startActivity(i);
             }
         });

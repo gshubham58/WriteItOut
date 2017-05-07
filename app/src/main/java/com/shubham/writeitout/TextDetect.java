@@ -53,6 +53,8 @@ public class TextDetect extends Activity implements
     private int isCorrectionMode;
     boolean var=true;
     public static String word="";
+    public String ext="";
+    static int ind=-1;
 
 
     @Override
@@ -116,6 +118,11 @@ public class TextDetect extends Activity implements
 
         mWidget.setText(mTextField.getText().toString());
         isCorrectionMode = 0;
+        Intent intent=getIntent();
+        ext=intent.getStringExtra("text");
+        ind=intent.getIntExtra("index",-1);
+        mTextField.setText(ext);
+        mWidget.setText(mTextField.getText().toString());
     }
 
     @Override
@@ -135,6 +142,9 @@ public class TextDetect extends Activity implements
 
     public void onClearButtonClick(View v) {
         mWidget.clear();
+        ext="";
+        mTextField.setText("");
+
     }
 
     public void onCandidateButtonClick(View v) {
@@ -144,10 +154,6 @@ public class TextDetect extends Activity implements
         }
     }
 
-    public void onMoreButtonClick(View v) {
-        mCandidatePanel.setVisibility(mCandidatePanel.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
-        updateCandidatePanel();
-    }
 
 
     public void onSpaceButtonClick(View v) {
@@ -218,7 +224,6 @@ public class TextDetect extends Activity implements
         // temporarily disable selection changed listener to prevent spurious cursor jumps
         mTextField.setOnSelectionChangedListener(null);
         mTextField.setTextKeepState(text);
-        Log.e("value",text+"  "+mTextField.length());
         word=text;
         if (isCorrectionMode == 0) {
             mTextField.setSelection(text.length());
@@ -465,7 +470,14 @@ public class TextDetect extends Activity implements
     public void onSaveButtonClick(View v){
     databaseHandler db=new databaseHandler(this);
         db.add(word);
-        Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
+        if(ind>=0){
+            db.delete(ind);
+        }
+        Log.e("index",""+ind);
+        this.finish();
+        Intent i=new Intent(TextDetect.this,MainActivity.class);
+        startActivity(i);
     }
 
 }

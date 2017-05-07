@@ -9,32 +9,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16sp"
+    android:padding="20sp"
+    app:theme="@style/AppTheme"
+
     android:gravity="center">
 
     <Button
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go To Math"
-        android:layout_marginBottom="10dp"
-        android:background="#aaaaaa"
+        android:text="Calculator"
+        android:layout_marginBottom="50dp"
+        android:background="#87ceeb"
         android:textColor="#ffffff"/>
 
     <Button
         android:id="@+id/btn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Go To Text"
-        android:background="#aaaaaa"
+        android:layout_marginBottom="50dp"
+        android:text="Word Search"
+        android:background="#87ceeb"
         android:textColor="#ffffff"/>
     <Button
         android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SAVED NOTES"
-        android:background="#aaaaaa"
+        android:text="NOTES"
+        android:background="#87ceeb"
         android:textColor="#ffffff"/>
 
 </LinearLayout>

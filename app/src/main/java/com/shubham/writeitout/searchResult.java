@@ -1,5 +1,6 @@
 package com.shubham.writeitout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -19,9 +20,10 @@ import javax.net.ssl.HttpsURLConnection;
 public class searchResult extends AppCompatActivity {
     String SearchWord = "";
     String finWord[] = new String[10];
-    String lan = "EN";
+    String lan = "en";
     static int count = 0;
-    TextView rslt1, rslt2, rslt3;
+    TextView rslt1, rslt2, rslt3,ttle;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,12 @@ public class searchResult extends AppCompatActivity {
         rslt1 = (TextView) findViewById(R.id.rslt1);
         rslt2 = (TextView) findViewById(R.id.rslt2);
         rslt3 = (TextView) findViewById(R.id.rslt3);
+        ttle=(TextView)findViewById(R.id.ttle);
+
         rslt1.setText("");
         rslt2.setText("");
         rslt3.setText("");
+
 
         if (SearchWord.length() > 0) {
             if (SearchWord.contains(" "))
@@ -42,34 +47,41 @@ public class searchResult extends AppCompatActivity {
             else
                 finWord[0] = SearchWord;
         } else {
-            Toast.makeText(searchResult.this, "Incorrect word", Toast.LENGTH_LONG).show();
+            Toast.makeText(searchResult.this, "Incorrect word", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(searchResult.this, TextDetect.class);
             startActivity(i);
             this.finish();
         }
         if (isonline()) {
+
+            ttle.setText("Searching For "+finWord[0]);
             try {
+
                 new CallbackTask().execute(dictionaryEntries(finWord[0], lan));
             } catch (Exception e) {
                 e.printStackTrace();
-
+                progressDialog.dismiss();
             }
             try {
                 new CallbackTask().execute(dictionaryEntriessyn(finWord[0], lan));
             } catch (Exception e) {
                 e.printStackTrace();
+                progressDialog.dismiss();
             }
             try {
                 new CallbackTask().execute(dictionaryEntriesant(finWord[0], lan));
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        } else {
-
-            Toast.makeText(searchResult.this, "Network Unavaliable", Toast.LENGTH_LONG).show();
-
+                progressDialog.dismiss();
 
         }
+        progressDialog.dismiss();
+    } else {
+
+        Toast.makeText(searchResult.this, "Network Unavaliable", Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
+        this.finish();
+    }
 
 
     }
@@ -144,8 +156,10 @@ public class searchResult extends AppCompatActivity {
                     rslt1.setText("Definition : " + obj.getDefinitions() + "\n\n" + "Example : " + obj.getExamples() + "\n");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(searchResult.this, "Definition not available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(searchResult.this, "No data available", Toast.LENGTH_SHORT).show();
                     count = 0;
+                    progressDialog.dismiss();
+                    searchResult.this.finish();
                 }
             } else if (count == 1) {
                 try {
@@ -154,7 +168,8 @@ public class searchResult extends AppCompatActivity {
                     rslt2.setText("Synonyms : " + obj1.getSynonym() + "\n");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(searchResult.this, "Synonym not available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(searchResult.this, "Synonym not available", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
 
             } else if (count == 2) {
@@ -165,13 +180,23 @@ public class searchResult extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(searchResult.this, "Antonym not available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(searchResult.this, "Antonym not available", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             } else {
             }
-
+        progressDialog.dismiss();
         }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(searchResult.this);
+            progressDialog.setTitle("Fetching Data...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
     }
 }
 

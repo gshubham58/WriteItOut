@@ -8,6 +8,8 @@
         android:id="@+id/action_clear"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:textColor="#ffffff"
+        android:background="#87ceeb"
         android:contentDescription="@null"
         android:text="clear"/>
 
