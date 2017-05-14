@@ -4,21 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eec"
     tools:context="com.shubham.writeitout.Notes">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+
+
     <GridView
+        android:id="@+id/grdvw"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="3"
-
         android:columnWidth="90dp"
-        android:stretchMode="columnWidth"
-        android:id="@+id/grdvw"
-        >
+        android:numColumns="3"
+        android:stretchMode="columnWidth">
 
     </GridView>
-    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/deleteimg"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/floatingActionButton"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="10sp"
+        android:background="#ff0000"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10sp"
+        android:onClick="AddNewButton"
+        android:src="@android:drawable/ic_input_add" />
 </RelativeLayout>

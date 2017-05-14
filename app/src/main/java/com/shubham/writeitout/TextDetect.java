@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -51,10 +53,10 @@ public class TextDetect extends Activity implements
     private GridView mCandidatePanel;
     private SingleLineWidgetApi mWidget;
     private int isCorrectionMode;
-    boolean var=true;
-    public static String word="";
-    public String ext="";
-    static int ind=-1;
+    boolean var = true;
+    public static String word = "";
+    public String ext = "";
+    static int ind = -1;
 
 
     @Override
@@ -72,8 +74,8 @@ public class TextDetect extends Activity implements
         mCandidatePanel.setAdapter(mCandidateAdapter);
 
         mWidget = (SingleLineWidgetApi) findViewById(R.id.widget);
-        var=mWidget.registerCertificate(com.shubham.writeitout.MyCertificate.getBytes());
-        Log.e("print",var+"");
+        var = mWidget.registerCertificate(com.shubham.writeitout.MyCertificate.getBytes());
+        Log.e("print", var + "");
 
         if (!mWidget.registerCertificate(com.shubham.writeitout.MyCertificate.getBytes())) {
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
@@ -118,9 +120,9 @@ public class TextDetect extends Activity implements
 
         mWidget.setText(mTextField.getText().toString());
         isCorrectionMode = 0;
-        Intent intent=getIntent();
-        ext=intent.getStringExtra("text");
-        ind=intent.getIntExtra("index",-1);
+        Intent intent = getIntent();
+        ext = intent.getStringExtra("text");
+        ind = intent.getIntExtra("index", -1);
         mTextField.setText(ext);
         mWidget.setText(mTextField.getText().toString());
     }
@@ -142,7 +144,7 @@ public class TextDetect extends Activity implements
 
     public void onClearButtonClick(View v) {
         mWidget.clear();
-        ext="";
+        ext = "";
         mTextField.setText("");
 
     }
@@ -153,7 +155,6 @@ public class TextDetect extends Activity implements
             mWidget.replaceCharacters(tag.start, tag.end, tag.text);
         }
     }
-
 
 
     public void onSpaceButtonClick(View v) {
@@ -224,7 +225,7 @@ public class TextDetect extends Activity implements
         // temporarily disable selection changed listener to prevent spurious cursor jumps
         mTextField.setOnSelectionChangedListener(null);
         mTextField.setTextKeepState(text);
-        word=text;
+        word = text;
         if (isCorrectionMode == 0) {
             mTextField.setSelection(text.length());
             mTextField.setOnSelectionChangedListener(this);
@@ -462,23 +463,63 @@ public class TextDetect extends Activity implements
 
         mCandidateAdapter.setCandidates(candidates);
     }
+
     public void onSearchButtonClick(View v) {
-        Intent i=new Intent(TextDetect.this,searchResult.class);
-        i.putExtra("word",word);
-        startActivity(i);
-    }
-    public void onSaveButtonClick(View v){
-    databaseHandler db=new databaseHandler(this);
-        db.add(word);
-        Toast.makeText(this,"Successful",Toast.LENGTH_SHORT).show();
-        if(ind>=0){
-            db.delete(ind);
+        if (word.length() > 0) {
+            if (isonline()) {
+                Intent i = new Intent(TextDetect.this, searchResult.class);
+                i.putExtra("word", word);
+                startActivity(i);
+            } else {
+                Toast.makeText(TextDetect.this, "Network Unavaliable", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(TextDetect.this, "Incorrect word", Toast.LENGTH_SHORT).show();
         }
-        Log.e("index",""+ind);
-        this.finish();
-        Intent i=new Intent(TextDetect.this,MainActivity.class);
-        startActivity(i);
     }
 
-}
+    public void onSaveButtonClick(View v) {
+        if (word.length() > 0) {
+            int i = 0, flag = 0;
+            databaseHandler db = new databaseHandler(this);
+            databaseModel dbm;
+            dbm = db.retreiveAll();
+            while (i < dbm.getNewWord().size()) {
+                if (dbm.getNewWord().get(dbm.getNum().get(i)).equals(word)) {
+                    flag = 1;
+                    break;
 
+                } else {
+                    i++;
+                }
+            }
+            if (flag == 0) {
+                db.add(word);
+                Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
+                if (ind >= 0) {
+                    db.delete(ind);
+                }
+                Log.e("index", "" + ind);
+                this.finish();
+                Intent intent = new Intent(TextDetect.this, MainActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Redundant data", Toast.LENGTH_SHORT).show();
+
+            }
+        } else {
+            Toast.makeText(this, "Cannot Save Empty String", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public boolean isonline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

@@ -77,7 +77,12 @@ public class databaseHandler extends SQLiteOpenHelper {
         db.execSQL(query);
 
     }
+    public void deleteAll() {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "delete from " + tablename + " where 1 ;";
+        db.execSQL(query);
 
+    }
 }
 
 

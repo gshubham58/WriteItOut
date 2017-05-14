@@ -22,8 +22,8 @@ public class searchResult extends AppCompatActivity {
     String finWord[] = new String[10];
     String lan = "en";
     static int count = 0;
-    TextView rslt1, rslt2, rslt3,ttle;
-    ProgressDialog progressDialog;
+    TextView rslt1, rslt2, rslt3, ttle;
+    static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,54 +34,42 @@ public class searchResult extends AppCompatActivity {
         rslt1 = (TextView) findViewById(R.id.rslt1);
         rslt2 = (TextView) findViewById(R.id.rslt2);
         rslt3 = (TextView) findViewById(R.id.rslt3);
-        ttle=(TextView)findViewById(R.id.ttle);
+        ttle = (TextView) findViewById(R.id.ttle);
 
         rslt1.setText("");
         rslt2.setText("");
         rslt3.setText("");
 
 
-        if (SearchWord.length() > 0) {
-            if (SearchWord.contains(" "))
-                finWord = SearchWord.split(" ");
-            else
-                finWord[0] = SearchWord;
+        if (SearchWord.contains(" ")) {
+            finWord = SearchWord.split(" ");
         } else {
-            Toast.makeText(searchResult.this, "Incorrect word", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(searchResult.this, TextDetect.class);
-            startActivity(i);
-            this.finish();
+            finWord[0] = SearchWord;
         }
-        if (isonline()) {
 
-            ttle.setText("Searching For "+finWord[0]);
-            try {
 
-                new CallbackTask().execute(dictionaryEntries(finWord[0], lan));
-            } catch (Exception e) {
-                e.printStackTrace();
-                progressDialog.dismiss();
-            }
-            try {
-                new CallbackTask().execute(dictionaryEntriessyn(finWord[0], lan));
-            } catch (Exception e) {
-                e.printStackTrace();
-                progressDialog.dismiss();
-            }
-            try {
-                new CallbackTask().execute(dictionaryEntriesant(finWord[0], lan));
-            } catch (Exception e) {
-                e.printStackTrace();
-                progressDialog.dismiss();
+        ttle.setText("Searching For " + finWord[0]);
+        try {
+
+            new CallbackTask().execute(dictionaryEntries(finWord[0], lan));
+        } catch (Exception e) {
+            e.printStackTrace();
+            progressDialog.dismiss();
+        }
+        try {
+            new CallbackTask().execute(dictionaryEntriessyn(finWord[0], lan));
+        } catch (Exception e) {
+            e.printStackTrace();
+            progressDialog.dismiss();
+        }
+        try {
+            new CallbackTask().execute(dictionaryEntriesant(finWord[0], lan));
+        } catch (Exception e) {
+            e.printStackTrace();
+            progressDialog.dismiss();
 
         }
         progressDialog.dismiss();
-    } else {
-
-        Toast.makeText(searchResult.this, "Network Unavaliable", Toast.LENGTH_LONG).show();
-        progressDialog.dismiss();
-        this.finish();
-    }
 
 
     }
@@ -104,15 +92,6 @@ public class searchResult extends AppCompatActivity {
         return "https://od-api.oxforddictionaries.com:443/api/v1/entries/" + language + "/" + word_id + "/antonyms";
     }
 
-    public boolean isonline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
     class CallbackTask extends AsyncTask<String, Integer, String> {
@@ -153,6 +132,7 @@ public class searchResult extends AppCompatActivity {
                 try {
                     model obj = JsonParser.parsefeed(result);
                     count = 1;
+                    progressDialog.dismiss();
                     rslt1.setText("Definition : " + obj.getDefinitions() + "\n\n" + "Example : " + obj.getExamples() + "\n");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -165,6 +145,7 @@ public class searchResult extends AppCompatActivity {
                 try {
                     model obj1 = JsonParserSyn.parsefeed(result);
                     count = 2;
+                    progressDialog.dismiss();
                     rslt2.setText("Synonyms : " + obj1.getSynonym() + "\n");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -176,6 +157,7 @@ public class searchResult extends AppCompatActivity {
                 try {
                     model obj2 = JsonParserAnt.parsefeed(result);
                     count = 0;
+                    progressDialog.dismiss();
                     rslt3.setText("Antonyms : " + obj2.getAntonym());
 
                 } catch (Exception e) {
@@ -185,18 +167,22 @@ public class searchResult extends AppCompatActivity {
                 }
             } else {
             }
-        progressDialog.dismiss();
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(searchResult.this);
-            progressDialog.setTitle("Fetching Data...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            Intent intent = getIntent();
+            SearchWord = intent.getStringExtra("word");
+                progressDialog = new ProgressDialog(searchResult.this);
+                progressDialog.setMessage("Fetching Data...");
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+            }
 
         }
     }
-}
 

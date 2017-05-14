@@ -7,24 +7,27 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon2"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:logo="@drawable/logo"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".math" />
+        <activity
+            android:name=".TextDetect"
+            android:screenOrientation="portrait" />
+        <activity android:name=".searchResult" />
+        <activity android:name=".Notes" />
+        <activity android:name=".noteDetails" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".math" />
-        <activity android:name=".TextDetect" />
-        <activity android:name=".searchResult" />
-        <activity android:name=".Notes" />
-        <activity android:name=".noteDetails"></activity>
     </application>
 
 </manifest>

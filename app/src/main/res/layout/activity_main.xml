@@ -4,23 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eeb"
     tools:context="com.shubham.writeitout.MainActivity">
-<LinearLayout
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="40sp"
+        app:srcCompat="@drawable/logoimg" />
+
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20sp"
-    app:theme="@style/AppTheme"
-
-    android:gravity="center">
-
+    android:gravity="center"
+    >
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="70sp" />
     <Button
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Calculator"
-        android:layout_marginBottom="50dp"
-        android:background="#87ceeb"
+        android:layout_margin="10dp"
+        android:background="#00b3ca"
         android:textColor="#ffffff"/>
 
     <Button
@@ -29,14 +40,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:text="Word Search"
-        android:background="#87ceeb"
+        android:layout_margin="10dp"
+        android:background="#00b3ca"
         android:textColor="#ffffff"/>
     <Button
         android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="NOTES"
-        android:background="#87ceeb"
+        android:background="#00b3ca"
         android:textColor="#ffffff"/>
 
 </LinearLayout>
