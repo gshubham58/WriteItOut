@@ -136,7 +136,7 @@ public class searchResult extends AppCompatActivity {
                     rslt1.setText("Definition : " + obj.getDefinitions() + "\n\n" + "Example : " + obj.getExamples() + "\n");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(searchResult.this, "No data available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(searchResult.this, "No Data Available", Toast.LENGTH_SHORT).show();
                     count = 0;
                     progressDialog.dismiss();
                     searchResult.this.finish();
