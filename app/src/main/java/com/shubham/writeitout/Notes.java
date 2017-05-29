@@ -25,14 +25,14 @@ public class Notes extends AppCompatActivity {
     int i = 0;
     databaseModel dbm;
     databaseHandler db;
-    ImageButton imgbtn;
+    TextView imgbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
         db = new databaseHandler(this);
-        imgbtn=(ImageButton)findViewById(R.id.deleteimg);
+        imgbtn=(TextView) findViewById(R.id.deleteimg);
         dbm= db.retreiveAll();
         if(dbm.getNum().size()<1){
 

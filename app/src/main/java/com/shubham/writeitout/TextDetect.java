@@ -480,20 +480,8 @@ public class TextDetect extends Activity implements
 
     public void onSaveButtonClick(View v) {
         if (word.length() > 0) {
-            int i = 0, flag = 0;
             databaseHandler db = new databaseHandler(this);
-            databaseModel dbm;
-            dbm = db.retreiveAll();
-            while (i < dbm.getNewWord().size()) {
-                if (dbm.getNewWord().get(dbm.getNum().get(i)).equals(word)) {
-                    flag = 1;
-                    break;
 
-                } else {
-                    i++;
-                }
-            }
-            if (flag == 0) {
                 db.add(word);
                 Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
                 if (ind >= 0) {
@@ -501,12 +489,10 @@ public class TextDetect extends Activity implements
                 }
                 Log.e("index", "" + ind);
                 this.finish();
-                Intent intent = new Intent(TextDetect.this, MainActivity.class);
+                Intent intent = new Intent(TextDetect.this, Notes.class);
                 startActivity(intent);
-            } else {
-                Toast.makeText(this, "Redundant data", Toast.LENGTH_SHORT).show();
 
-            }
+
         } else {
             Toast.makeText(this, "Cannot Save Empty String", Toast.LENGTH_SHORT).show();
         }
